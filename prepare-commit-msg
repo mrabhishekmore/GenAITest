@@ -1,0 +1,19 @@
+#!/bin/bash
+
+msg_file="$1"
+status_file=".git/.sonar_task_status"
+
+if [[ -f "$status_file" ]]; then
+    task_status=$(cat "$status_file")
+
+    # Read the first line and rest of the commit message
+    first_line=$(head -n1 "$msg_file")
+    rest=$(tail -n +2 "$msg_file")
+
+    # Append task_id:status directly to the first line
+    echo "${first_line} ${task_status}" > "$msg_file"
+    echo "$rest" >> "$msg_file"
+
+    # Remove the file
+    rm -f "$status_file"
+fi

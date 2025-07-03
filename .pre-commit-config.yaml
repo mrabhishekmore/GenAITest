@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+        types: [python]
+      - id: end-of-file-fixer
+        types: [python]
+
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        args: ["--select=D100,D102,D103"]
+
+  - repo: local
+    hooks:
+      - id: check-sonar-quality-gate
+        name: Check SonarQube Quality Gate
+        entry: python scripts/sonar_checks.py
+        language: system
+        pass_filenames: false
+        verbose: true
+  
